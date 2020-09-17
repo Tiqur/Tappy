@@ -22,6 +22,8 @@ class Click {
     }
 }
 
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     long startTime = -1L;
     int bpmAverageRange = 2000; // ( Milliseconds ) this will be dynamic later on  ( example: if 2000ms, then get every click from last 2sec and average )
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int b2clicks;
     private Button button1;
     private Button button2;
+    private Button resetButton;
     private TextView bpmText;
     private TextView clicksText;
 
@@ -39,10 +42,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
+        resetButton = (Button) findViewById(R.id.resetBtn);
         bpmText = (TextView) findViewById(R.id.bpm);
         clicksText = (TextView) findViewById(R.id.clicks);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
+
+        // I should probably fix this at some point
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTime = -1;
+                b1clicks = 0;
+                b2clicks = 0;
+                clicks.clear();
+                bpmText.setText("BPM: 0");
+                clicksText.setText("Clicks: 0");
+                button1.setText("");
+                button2.setText("");
+            }
+        });
+
     }
 
     // unstable rate
@@ -55,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // for stamina practice, have progress bar
 
     // settings page?
+
     @Override
     public void onClick(View v) {
         long now = Calendar.getInstance().getTimeInMillis();
