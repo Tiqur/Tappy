@@ -1,10 +1,14 @@
 package me.tiqur.tappy;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,9 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     HashSet<Click> clicks = new HashSet<>();
     int b1clicks;
     int b2clicks;
+    int bpmTarget = 180;
     private Button button1;
     private Button button2;
     private Button resetButton;
+    private SeekBar bpmViz1;
+    private TextView target;
     private TextView bpmText;
     private TextView clicksText;
 
@@ -42,11 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
+        bpmViz1 = (SeekBar) findViewById(R.id.bpmViz1);
         resetButton = (Button) findViewById(R.id.resetBtn);
         bpmText = (TextView) findViewById(R.id.bpm);
         clicksText = (TextView) findViewById(R.id.clicks);
+        target = (TextView) findViewById(R.id.targetText);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
+
+        bpmViz1.setMax(bpmTarget*2);
+        target.setText("Target: " + bpmTarget);
 
         // I should probably fix this at some point
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 button2.setText("");
             }
         });
-
     }
 
     // unstable rate
@@ -75,7 +86,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // for stamina practice, have progress bar
 
     // settings page?
+    // OD setting that changes range
 
+    // interpolate between colors depending on how close to target
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
         long now = Calendar.getInstance().getTimeInMillis();
@@ -94,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Calculates BPM
         double bpm = Math.round((((float) inRange.size() / bpmAverageRange * 60000.0) / 4.0) * 100.0) / 100.0;;
+
+        // moves according to bpm
+        bpmViz1.setProgress((int)bpm, true);
+
 
 
         if (v.getId() == button1.getId()) {
