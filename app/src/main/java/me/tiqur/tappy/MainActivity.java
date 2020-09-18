@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int b2clicks;
     int bpmTarget = 180;
     private Button button1;
+    private LineGraphSeries<DataPoint> averageBpmGraphSeries;
     private Button button2;
     private Button resetButton;
     private SeekBar bpmViz1;
@@ -47,6 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GraphView averageBpmGraphView = (GraphView) findViewById(R.id.graph);
+        averageBpmGraphSeries = new LineGraphSeries<DataPoint>();
+
+        double x, y;
+        x = -5.0;
+        for (int i = 0; i < 500; i++) {
+            x = x + 0.1;
+            y = Math.sin(x);
+            averageBpmGraphSeries.appendData(new DataPoint(x, y), true, 500);
+        }
+        averageBpmGraphView.addSeries(averageBpmGraphSeries);
+
+
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         bpmViz1 = (SeekBar) findViewById(R.id.bpmViz1);
