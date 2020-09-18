@@ -61,6 +61,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/unstableRateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="89dp"
+        android:text="UnstableRate: 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SeekBar
         android:id="@+id/bpmViz1"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -96,7 +107,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph"
+        android:id="@+id/bpmGraph"
         android:layout_width="378dp"
         android:layout_height="165dp"
         android:layout_marginStart="16dp"
